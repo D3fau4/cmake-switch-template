@@ -24,20 +24,12 @@ file(GLOB_RECURSE SOURCES_CXX ${PROJECT_SOURCE_DIR}/source/*.cpp)
 add_executable(cmake_switch_template ${SOURCES_ASM} ${SOURCES_C} ${SOURCES_CXX})
 
 # Next, we need to set the required target properties
-# so CMake can detect the metadata for the application.
+# so CMake can detect the JSON configuration for the module.
 set_target_properties(cmake_switch_template PROPERTIES
-        APP_TITLE "Template Application"
-        APP_AUTHOR "Valentin B."
-        APP_VERSION "0.1.0"
-        ROMFS "${CMAKE_CURRENT_LIST_DIR}/romfs")
+        CONFIG_JSON ${PROJECT_SOURCE_DIR}/sysmodule.json)
 
 # Then, we link the required libraries (libnx) against the executable.
 target_link_libraries(cmake_switch_template switch::libnx)
 
-# Set these variables if you don't want to use an icon or
-# don't want `add_nro_target` to generate a .nacp file.
-set(NO_ICON TRUE)
-#set(NO_NACP TRUE)
-
-# And finally we can add the actual binary (.nro) target.
-add_nro_target(cmake_switch_template)
+# And finally we can add the actual binary (.nsp) target.
+add_nsp_target(cmake_switch_template)
